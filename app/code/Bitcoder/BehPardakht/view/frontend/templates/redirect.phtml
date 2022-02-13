@@ -1,0 +1,26 @@
+<?php
+/**
+ ** @var $this \Bitcoder\BehPardakht\Block\Redirect
+ */
+
+?>
+<h3>
+    در حال اتصال به بانک
+</h3>
+<?php
+$result = $this->sendToBank();
+if ($result['state']) {
+    ?>
+
+    <form method="post" id="behpardakht" action="https://bpm.shaparak.ir/pgwchannel/startpay.mellat">
+        <input type='hidden' name='RefId' value='<?= $result['msg'] ?>'>
+    </form>
+
+    <script>
+        document.getElementById("behpardakht").submit();
+    </script>
+    <?php
+} else {
+    echo $result['msg'];
+}
+?>

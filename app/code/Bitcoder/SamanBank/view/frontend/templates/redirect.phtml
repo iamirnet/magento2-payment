@@ -1,0 +1,29 @@
+<?php
+/**
+ ** @var $this \Bitcoder\SamanBank\Block\Redirect
+ */
+
+?>
+<h3>
+    در حال اتصال به بانک
+</h3>
+ <?php
+$result=$this->sendToBank();
+if($result['state']){
+    ?>
+
+<form method="post" id="myForm" action="https://sep.shaparak.ir/payment.aspx">
+    <input type='hidden' name='Amount' value='<?=$result['Amount']?>' />
+    <input type='hidden' name='ResNum' value='<?=$result['OrderId']?>'>
+    <input type='hidden' name='RedirectURL' value='<?=$result['CallbackURL']?>'/>
+    <input type='hidden' name='MID' value='<?=$result['MerchantID']?>'/>
+</form>
+    <script>
+        document.getElementById("myForm").submit();
+
+    </script>
+<?php
+}else{
+    echo $result['msg'];
+}
+?>
